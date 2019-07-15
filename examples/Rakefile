@@ -1,0 +1,4 @@
+desc 'compile into js'
+task :default do
+  sh 'opal -c -g ovto -g ovto-router app.rb > app.js'
+end
