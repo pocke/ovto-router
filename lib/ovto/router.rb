@@ -10,8 +10,10 @@ end
 # require all the files, only if Opal is executing
 if RUBY_ENGINE == 'opal'
   require 'ovto'
+  require 'native'
   require_relative 'router/version'
   require_relative 'router/hash_router'
+  require_relative 'router/link'
   require_relative 'router/mixin/state'
   require_relative 'router/mixin/actions'
 else

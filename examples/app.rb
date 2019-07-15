@@ -18,6 +18,12 @@ class App < Ovto::App
           "/hello": -> { o 'h1', 'Hello' },
           "/bye": -> { o 'h2', 'Bye' },
         }
+
+        o Ovto::Router::Link, to: '/hello', text: "Hello"
+        o 'br'
+        o Ovto::Router::Link, to: '/bye', text: "Bye"
+        o 'br'
+        o Ovto::Router::Link, to: '/', text: "root"
       end
     end
   end

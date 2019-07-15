@@ -1,5 +1,3 @@
-require 'native'
-
 module Ovto
   module Router
     class HashRouter < Ovto::Component
@@ -9,7 +7,7 @@ module Ovto
       #     "/foo/:id": -> (id:) { o FooComponent, id: id },
       #   }
       def render(routes:)
-        o 'div', { oncreate: -> { actions.ovto_router_handle_update_path(path: current_path) } } do
+        o 'div', { oncreate: -> { on_create } } do
           routes.each do |matcher, renderer|
             if matcher == state.ovto_router_path
               renderer.call
@@ -21,6 +19,15 @@ module Ovto
 
       private def current_path
         Native(`location.hash`)[1..-1]
+      end
+
+      private def on_create
+        actions.ovto_router_handle_update_path(path: current_path)
+        %x!
+          window.addEventListener('popstate', function (event) {
+            #{actions.ovto_router_handle_update_path(path: current_path)}
+          });
+        !
       end
     end
   end
