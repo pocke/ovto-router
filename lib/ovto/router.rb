@@ -11,6 +11,9 @@ end
 if RUBY_ENGINE == 'opal'
   require 'ovto'
   require_relative 'router/version'
+  require_relative 'router/hash_router'
+  require_relative 'router/mixin/state'
+  require_relative 'router/mixin/actions'
 else
   # NOT running inside of opal, set things up
   # so opal can find the files.
