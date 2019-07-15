@@ -16,14 +16,14 @@ class App < Ovto::App
         o Ovto::Router::HashRouter, routes: {
           "/": -> { o 'h1', 'Top' },
           "/hello": -> { o 'h1', 'Hello' },
-          "/bye": -> { o 'h2', 'Bye' },
+          "/bye": -> { o 'h1', 'Bye' },
         }
 
-        o Ovto::Router::Link, to: '/hello', text: "Hello"
+        o Ovto::Router::Link, path: '#/hello', text: "Hello"
         o 'br'
-        o Ovto::Router::Link, to: '/bye', text: "Bye"
+        o Ovto::Router::Link, path: '#/bye', text: "Bye"
         o 'br'
-        o Ovto::Router::Link, to: '/', text: "root"
+        o Ovto::Router::Link, path: '#/', text: "root"
       end
     end
   end

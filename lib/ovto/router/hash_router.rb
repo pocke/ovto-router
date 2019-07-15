@@ -9,7 +9,7 @@ module Ovto
       def render(routes:)
         o 'div', { oncreate: -> { on_create } } do
           routes.each do |matcher, renderer|
-            if matcher == state.ovto_router_path
+            if trim_hash(matcher) == trim_hash(state.ovto_router.path)
               renderer.call
               break
             end
@@ -17,14 +17,23 @@ module Ovto
         end
       end
 
+      private def trim_hash(path)
+        if path.start_with?('#')
+          path[1..-1]
+        else
+          path
+        end
+      end
+
       private def current_path
-        Native(`location.hash`)[1..-1]
+        Native(`location.hash`)
       end
 
       private def on_create
         actions.ovto_router_handle_update_path(path: current_path)
         %x!
           window.addEventListener('popstate', function (event) {
+            event.preventDefault();
             #{actions.ovto_router_handle_update_path(path: current_path)}
           });
         !
