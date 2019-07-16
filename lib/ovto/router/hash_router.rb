@@ -26,7 +26,7 @@ module Ovto
       end
 
       private def current_path
-        Native(`location.hash`)
+        Native(`location.hash || '/'`)
       end
 
       private def on_create
