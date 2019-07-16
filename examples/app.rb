@@ -1,33 +1,32 @@
 require 'ovto'
 require 'ovto/router'
 
-class App < Ovto::App
+class MyApp < Ovto::App
   class State < Ovto::State
-    include Ovto::Router::Mixin::State
+    include Ovto::Router::State
   end
 
   class Actions < Ovto::Actions
-    include Ovto::Router::Mixin::Actions
+    include Ovto::Router::Actions
   end
 
   class MainComponent < Ovto::Component
     def render
       o 'div' do
         o Ovto::Router::HashRouter, routes: {
-          "/": -> { o 'h1', 'Top' },
-          "/hello": -> { o 'h1', 'Hello' },
-          "/bye": -> { o 'h1', 'Bye' },
+          "/": -> { o 'h1', 'Root' },
+          "/hello": -> { o 'h2', "Hello" },
+          "/bye": -> { o 'h2', "Bye" },
         }
 
-        o Ovto::Router::Link, path: '#/hello', text: "Hello"
+        o Ovto::Router::Link, path: '#/', text: 'go to root'
         o 'br'
-        o Ovto::Router::Link, path: '#/bye', text: "Bye"
+        o Ovto::Router::Link, path: '#/hello', text: 'go to hello'
         o 'br'
-        o Ovto::Router::Link, path: '#/', text: "root"
+        o Ovto::Router::Link, path: '#/bye', text: 'go to bye'
       end
     end
   end
 end
 
-
-App.run(id: 'ovto')
+MyApp.run(id: 'ovto')

@@ -1,8 +1,6 @@
 # Ovto::Router
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ovto/router`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A router for [Ovto](https://github.com/yhara/ovto).
 
 ## Installation
 
@@ -22,7 +20,40 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'ovto'
+require 'ovto/router'
+
+class MyApp < Ovto::App
+  class State < Ovto::State
+    include Ovto::Router::State
+  end
+
+  class Actions < Ovto::Actions
+    include Ovto::Router::Actions
+  end
+
+  class MainComponent < Ovto::Component
+    def render
+      o 'div' do
+        o Ovto::Router::HashRouter, routes: {
+          "/": -> { o 'h1', 'Root' },
+          "/hello": -> { o 'h2', "Hello" },
+          "/bye": -> { o 'h2', "Bye" },
+        }
+
+        o Ovto::Router::Link, path: '#/', text: 'go to root'
+        o 'br'
+        o Ovto::Router::Link, path: '#/hello', text: 'go to hello'
+        o 'br'
+        o Ovto::Router::Link, path: '#/bye', text: 'go to bye'
+      end
+    end
+  end
+end
+
+MyApp.run(id: 'ovto')
+```
 
 ## Development
 
