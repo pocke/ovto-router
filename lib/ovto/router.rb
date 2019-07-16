@@ -14,8 +14,8 @@ if RUBY_ENGINE == 'opal'
   require_relative 'router/version'
   require_relative 'router/hash_router'
   require_relative 'router/link'
-  require_relative 'router/mixin/state'
-  require_relative 'router/mixin/actions'
+  require_relative 'router/state'
+  require_relative 'router/actions'
   require_relative 'router/ovto_router_state'
 else
   # NOT running inside of opal, set things up
