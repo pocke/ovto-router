@@ -7,14 +7,16 @@ module Ovto
       #     "/foo/:id": -> (id:) { o FooComponent, id: id },
       #   }
       def render(routes:)
-        o 'div', { oncreate: -> { on_create } } do
-          routes.each do |matcher, renderer|
-            if trim_hash(matcher) == trim_hash(state.ovto_router.path)
-              renderer.call
-              break
-            end
+        routes.each do |matcher, renderer|
+          if trim_hash(matcher) == trim_hash(state.ovto_router.path)
+            renderer.call
+            break
           end
         end
+
+        # A dummy node to bind oncreate hook
+        # NOTE: it needs `key` attribute to ensure calling oncreate event.
+        o 'div', { oncreate: -> { on_create }, style: { display: 'none' }, key: 'Ovto::Router::HashRouter' }
       end
 
       private def trim_hash(path)
