@@ -7,9 +7,11 @@ module Ovto
       #     "/foo/:id": -> (id:) { o FooComponent, id: id },
       #   }
       def render(routes:)
-        routes.each do |matcher, renderer|
-          if trim_hash(matcher) == trim_hash(state.ovto_router.path)
-            renderer.call
+        path = trim_hash(state.ovto_router.path)
+        routes.each do |match_txt, renderer|
+          matcher = Matcher.build(trim_hash(match_txt))
+          if params = matcher.match?(path)
+            renderer.call(params)
             break
           end
         end
